@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omnibridge-mcp"
+version = "1.0.0"
+description = "Lightweight, resilient multi-channel notification and webhook MCP server for AI agents"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Johann Schiffer"}
+]
+keywords = ["mcp", "model-context-protocol", "claude", "cursor", "telegram", "discord", "notifications", "ai-agent"]
+dependencies = [
+    "httpx>=0.25.0"
+]
+
+[project.scripts]
+omnibridge-mcp = "omnibridge.server:main"
+omnibridge-cli = "omnibridge.cli:main"
