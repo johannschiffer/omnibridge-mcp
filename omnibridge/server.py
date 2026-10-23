@@ -243,6 +243,13 @@ class OmniBridgeMCPServer:
                 logger.error(f"Unexpected error: {e}")
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog="omnibridge-mcp",
+        description="OmniBridge MCP: Resilient Multi-Channel Notification and Webhook Server for AI Agents"
+    )
+    parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.0.0")
+    args, unknown = parser.parse_known_args()
     server = OmniBridgeMCPServer()
     server.run_stdio()
 
