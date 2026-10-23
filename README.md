@@ -1,5 +1,9 @@
 # OmniBridge MCP (Lite Edition)
 
+> **Free:** [Genesis Starter Kit](https://johanld.gumroad.com/l/khffw) (25 `.cursorrules`/`CLAUDE.md` rulesets + MCP configs). Try the [live config builder](https://johannschiffer.github.io).
+> **Full stack:** all six servers in [Genesis Enterprise Suite ($19)](https://johanld.gumroad.com/l/tzuvz).
+
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-brightgreen.svg)](https://python.org)
 [![MCP Compliant](https://img.shields.io/badge/MCP-2024--11--05-purple.svg)](https://modelcontextprotocol.io)
@@ -7,6 +11,31 @@
 **OmniBridge MCP** is a lightweight, zero-latency Model Context Protocol server that gives AI agents (in **Claude Desktop**, **Cursor**, **Windsurf**, and **Antigravity**) direct, controlled access to send real-time alerts, operational notifications, and webhooks without exposing your primary API keys or relying on bloated middleware.
 
 ---
+
+## Run without cloning
+
+```bash
+uvx --from git+https://github.com/johannschiffer/omnibridge-mcp omnibridge-mcp
+```
+
+Claude Desktop / Cursor config entry:
+
+```json
+{
+  "mcpServers": {
+    "omnibridge-mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/johannschiffer/omnibridge-mcp",
+        "omnibridge-mcp"
+      ]
+    }
+  }
+}
+```
+
+[![CI](https://github.com/johannschiffer/omnibridge-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/johannschiffer/omnibridge-mcp/actions/workflows/ci.yml)
 
 ## ⚡ Key Features (Lite Edition)
 
@@ -108,7 +137,7 @@ On Linux: `~/.config/Claude/claude_desktop_config.json`
 
 Looking for production-grade reliability, business messaging, and fault tolerance?
 
-| Feature | Lite (Open Source) | Pro ($14.99 USD) |
+| Feature | Lite (Open Source) | Enterprise Suite ($19) |
 |---|:---:|:---:|
 | **Telegram Bot API** | ✅ | ✅ |
 | **Discord Webhooks** | ✅ | ✅ |
@@ -121,10 +150,23 @@ Looking for production-grade reliability, business messaging, and fault toleranc
 | **Production Docker & Compose** | ❌ | ✅ |
 | **Full Pytest Suite & Architecture PDF** | ❌ | ✅ |
 
-👉 **[Get OmniBridge Pro on Gumroad ($14.99)](https://johanld.gumroad.com/l/omnibridge-mcp-pro)**
+👉 **[Get the Genesis Enterprise Suite ($19)](https://johanld.gumroad.com/l/tzuvz)**
 
 ---
 
 ## 📄 License
 
 MIT License. See [LICENSE](LICENSE) for details.
+
+## Genesis MCP Ecosystem
+
+| Module | What it does | Repo |
+|---|---|---|
+| **CrawlEngine MCP** | Anti-bot web scraping, clean Markdown, proxy rotation and TLS evasion | [GitHub](https://github.com/johannschiffer/crawlengine-mcp) |
+| **BrowserBridge MCP** | Deterministic headless browser automation with cryptographic action receipts | [GitHub](https://github.com/johannschiffer/browserbridge-mcp) |
+| **PgSafe MCP** | Zero-trust PostgreSQL/SQLite guard, live PII masking, zero-downtime migration checks | [GitHub](https://github.com/johannschiffer/pgsafe-mcp) |
+| **OmniBridge MCP** (this repo) | Multi-channel notification and webhook bus with a persistent SQLite WAL queue | [GitHub](https://github.com/johannschiffer/omnibridge-mcp) |
+| **SysFlow MCP** | Safe Linux administration plane: systemd, port audit, isolated execution | [GitHub](https://github.com/johannschiffer/sysflow-mcp) |
+| **FastMCP Forge** | Production MCP server scaffolder: stdio, SSE and auth middleware | [GitHub](https://github.com/johannschiffer/fastmcp-forge) |
+
+[Live config builder](https://johannschiffer.github.io) | [Starter Kit, free](https://johanld.gumroad.com/l/khffw) | [Enterprise Suite, $19](https://johanld.gumroad.com/l/tzuvz)

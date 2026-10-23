@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omnibridge-mcp"
-version = "1.0.0"
+version = "1.1.0"
 description = "Lightweight, resilient multi-channel notification and webhook MCP server for AI agents"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -17,6 +17,16 @@ dependencies = [
     "httpx>=0.25.0"
 ]
 
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
 [project.scripts]
 omnibridge-mcp = "omnibridge.server:main"
 omnibridge-cli = "omnibridge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["omnibridge*"]
+
+[project.urls]
+Homepage = "https://johannschiffer.github.io"
+Repository = "https://github.com/johannschiffer/omnibridge-mcp"
