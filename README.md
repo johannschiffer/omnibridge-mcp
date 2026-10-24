@@ -20,7 +20,7 @@
 ## Run without cloning
 
 ```bash
-uvx --from git+https://github.com/johannschiffer/omnibridge-mcp omnibridge-mcp
+uvx omnibridge-mcp
 ```
 
 Claude Desktop / Cursor config entry:
