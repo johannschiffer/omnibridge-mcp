@@ -23,7 +23,7 @@ class OmniBridgeMCPServer:
         self.telegram = TelegramChannel()
         self.discord = DiscordChannel()
         self.server_name = "omnibridge-mcp"
-        self.server_version = "1.0.0"
+        self.server_version = "1.0.1"
 
     def get_tools_definition(self) -> List[Dict[str, Any]]:
         return [
@@ -219,6 +219,8 @@ class OmniBridgeMCPServer:
 
     def run_stdio(self):
         """Standard IO event loop reading JSON-RPC lines from stdin and writing to stdout."""
+        from ._genesis import print_upgrade_notice
+        print_upgrade_notice()
         logger.info(f"Starting {self.server_name} v{self.server_version} stdio listener...")
         for line in sys.stdin:
             line = line.strip()
@@ -244,14 +246,26 @@ class OmniBridgeMCPServer:
 
 def main():
     import argparse
+    from ._genesis import NOTICE
     parser = argparse.ArgumentParser(
         prog="omnibridge-mcp",
-        description="OmniBridge MCP: Resilient Multi-Channel Notification and Webhook Server for AI Agents"
+        description="OmniBridge MCP: Resilient Multi-Channel Notification and Webhook Server for AI Agents",
+        epilog=NOTICE,
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.0.0")
+    parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.0.1")
     args, unknown = parser.parse_known_args()
     server = OmniBridgeMCPServer()
     server.run_stdio()
+
+_main_impl = main
+
+def main():
+    from ._genesis import print_upgrade_notice
+    try:
+        return _main_impl()
+    finally:
+        print_upgrade_notice()
 
 if __name__ == "__main__":
     main()

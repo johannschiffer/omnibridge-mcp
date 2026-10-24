@@ -12,7 +12,8 @@ import sys
 from .channels import TelegramChannel, DiscordChannel
 
 def main():
-    parser = argparse.ArgumentParser(description="OmniBridge CLI utility")
+    from ._genesis import NOTICE
+    parser = argparse.ArgumentParser(description="OmniBridge CLI utility", epilog=NOTICE, formatter_class=argparse.RawDescriptionHelpFormatter)
     subparsers = parser.add_subparsers(dest="command", help="Sub-commands")
 
     # Status command
