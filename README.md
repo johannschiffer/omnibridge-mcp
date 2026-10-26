@@ -163,6 +163,19 @@ Looking for production-grade reliability, business messaging, and fault toleranc
 
 ---
 
+
+## Solución Enterprise (Genesis Suite)
+
+Para despliegues en producción y cargas intensivas con bypass de rate limits, soporte multi-tenant y configuraciones Docker precompiladas:
+
+- **Bypass de Rate Limits & IP Rotation:** Bus de notificaciones y webhooks multi-tenant con cola SQLite WAL de alta disponibilidad y reintentos.
+- **Soporte Multi-Tenant & RBAC:** Control de accesos granular, gestión de secretos y auditoría criptográfica.
+- **Docker Compose Stacks:** Contenedores precompilados y configuraciones listas para producción con orquestación autónoma.
+
+👉 **[Genesis Enterprise Suite ($19 USD)](https://johanld.gumroad.com/l/genesis-enterprise-suite)**  
+📦 **[Genesis AI Engineering Starter Kit ($0+)](https://johanld.gumroad.com/l/genesis-starter-kit)**
+
+
 ## 📄 License
 
 MIT License. See [LICENSE](LICENSE) for details.
@@ -179,3 +192,11 @@ MIT License. See [LICENSE](LICENSE) for details.
 | **FastMCP Forge** | Production MCP server scaffolder: stdio, SSE and auth middleware | [GitHub](https://github.com/johannschiffer/fastmcp-forge) |
 
 [Live config builder](https://johannschiffer.github.io) | [Starter Kit, free](https://johanld.gumroad.com/l/genesis-starter-kit) | [Enterprise Suite, $19](https://johanld.gumroad.com/l/genesis-enterprise-suite)
+
+## Recommended Infrastructure & Sponsorship
+
+- **Sponsorship & Corporate Support**: Support continued maintenance and priority feature requests via [GitHub Sponsors](https://github.com/sponsors/johannschiffer).
+- **Verified Cloud & Network Infrastructure**:
+  - **High-Performance VPS & Nodes**: [Hetzner Cloud](https://www.hetzner.com/cloud) & [DigitalOcean](https://m.do.co/c/johannschiffer)
+  - **Reliable Proxy Pool & IP Rotation**: [Webshare](https://www.webshare.io/) & [Bright Data](https://brightdata.com/)
+  - **Documentation & Setup Guides**: [johannschiffer.github.io](https://johannschiffer.github.io/)
