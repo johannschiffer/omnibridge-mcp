@@ -1,5 +1,16 @@
 # OmniBridge MCP (Lite Edition)
 
+[![Early Access $9](https://img.shields.io/badge/Early%20Access-%249%20Promo-orange.svg)](https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS)
+> Enterprise Suite Pro: $9 Early Access (Regular $19) con código EARLYACCESS: https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS
+
+> ### ⚡ Enterprise Infrastructure & Tooling
+> | Component | Pricing | Delivery / Direct Access |
+> |---|---|---|
+> | **Starter Kit** | **Free ($0+)** | 25+ `.cursorrules`, `CLAUDE.md` stack rules & MCP config templates. [Download Free](https://johanld.gumroad.com/l/genesis-starter-kit) |
+> | **Enterprise Suite Pro** | **$9 Early Access** ~~$19~~ | 6 Pro MCP Servers, Zero-Downtime DB migrations, Residential Proxies, Docker Compose Stack & Commercial License. [Get Early Access ($9)](https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS) |
+> | **Config Generator** | **Free Web Tool** | Interactive visual config generator for Claude Desktop & Cursor. [Open Generator](https://johannschiffer.github.io/) |
+
+
 <a href="https://glama.ai/mcp/servers/@johannschiffer/omnibridge-mcp">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/@johannschiffer/omnibridge-mcp/badge" alt="omnibridge-mcp MCP server" />
 </a>
@@ -16,7 +27,7 @@
 > | Package | Access | Features |
 > |---|---|---|
 > | **Starter Kit** | **Free ($0+)** | 25+ `.cursorrules`, `CLAUDE.md` stack rules & MCP config templates. [Download Free](https://johanld.gumroad.com/l/genesis-starter-kit) |
-> | **Enterprise Suite Pro** | **$19 USD** | 6 Pro MCP Servers, Zero-Downtime DB migrations, Residential Proxies, Docker Compose Stack & Commercial License. [Get Pro License](https://johanld.gumroad.com/l/genesis-enterprise-suite) |
+> | **Enterprise Suite Pro** | **$19 USD** | 6 Pro MCP Servers, Zero-Downtime DB migrations, Residential Proxies, Docker Compose Stack & Commercial License. [Get Pro License](https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS) |
 > | **Config Generator** | **Free Web Tool** | Interactive visual config generator for Claude Desktop & Cursor. [Open Generator](https://johannschiffer.github.io/) |
 
 **OmniBridge MCP** is a lightweight, zero-latency Model Context Protocol server that gives AI agents (in **Claude Desktop**, **Cursor**, **Windsurf**, and **Antigravity**) direct, controlled access to send real-time alerts, operational notifications, and webhooks without exposing your primary API keys or relying on bloated middleware.
@@ -146,7 +157,7 @@ On Linux: `~/.config/Claude/claude_desktop_config.json`
 
 Looking for production-grade reliability, business messaging, and fault tolerance?
 
-| Feature | Lite (Open Source) | Enterprise Suite ($19) |
+| Feature | Lite (Open Source) | Enterprise Suite ($9 Early Access) |
 |---|:---:|:---:|
 | **Telegram Bot API** | ✅ | ✅ |
 | **Discord Webhooks** | ✅ | ✅ |
@@ -159,7 +170,7 @@ Looking for production-grade reliability, business messaging, and fault toleranc
 | **Production Docker & Compose** | ❌ | ✅ |
 | **Full Pytest Suite & Architecture PDF** | ❌ | ✅ |
 
-👉 **[Get the Genesis Enterprise Suite ($19)](https://johanld.gumroad.com/l/genesis-enterprise-suite)**
+👉 **[Get the Genesis Enterprise Suite ($9 Early Access)](https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS)**
 
 ---
 
@@ -172,7 +183,7 @@ Para despliegues en producción y cargas intensivas con bypass de rate limits, s
 - **Soporte Multi-Tenant & RBAC:** Control de accesos granular, gestión de secretos y auditoría criptográfica.
 - **Docker Compose Stacks:** Contenedores precompilados y configuraciones listas para producción con orquestación autónoma.
 
-👉 **[Genesis Enterprise Suite ($19 USD)](https://johanld.gumroad.com/l/genesis-enterprise-suite)**  
+👉 **[Genesis Enterprise Suite ($9 Early Access)](https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS)**  
 📦 **[Genesis AI Engineering Starter Kit ($0+)](https://johanld.gumroad.com/l/genesis-starter-kit)**
 
 
@@ -191,7 +202,7 @@ MIT License. See [LICENSE](LICENSE) for details.
 | **SysFlow MCP** | Safe Linux administration plane: systemd, port audit, isolated execution | [GitHub](https://github.com/johannschiffer/sysflow-mcp) |
 | **FastMCP Forge** | Production MCP server scaffolder: stdio, SSE and auth middleware | [GitHub](https://github.com/johannschiffer/fastmcp-forge) |
 
-[Live config builder](https://johannschiffer.github.io) | [Starter Kit, free](https://johanld.gumroad.com/l/genesis-starter-kit) | [Enterprise Suite, $19](https://johanld.gumroad.com/l/genesis-enterprise-suite)
+[Live config builder](https://johannschiffer.github.io) | [Starter Kit, free](https://johanld.gumroad.com/l/genesis-starter-kit) | [Enterprise Suite, $9 Early Access](https://johanld.gumroad.com/l/genesis-enterprise-suite/EARLYACCESS)
 
 ## Recommended Infrastructure & Sponsorship
 
