@@ -1,8 +1,9 @@
 """
-OmniBridge MCP (Lite Edition)
-Open-source Multi-Channel Notification Server for AI Agents and Claude Desktop.
+omnibridge-mcp (v2.0.0)
+Lightweight, resilient multi-channel notification and webhook MCP server with WAL queue for AI agents
+100% Free & Open Source under the MIT License.
 """
 
-__version__ = "1.0.4"
-__author__ = "Johann Schiffer / NEXUS"
+__version__ = "2.0.0"
+__author__ = "Johann Schiffer"
 __license__ = "MIT"

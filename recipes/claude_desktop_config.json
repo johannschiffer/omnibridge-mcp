@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "omnibridge-mcp": {
+      "command": "uvx",
+      "args": ["omnibridge-mcp"]
+    }
+  }
+}
