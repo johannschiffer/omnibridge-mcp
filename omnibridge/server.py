@@ -1,4 +1,3 @@
-from ._genesis import NOTICE, print_upgrade_notice
 """
 OmniBridge MCP: Model Context Protocol Server (Enterprise Pro Edition)
 Includes multi-channel dispatch (Telegram, Discord, WhatsApp, Slack, Matrix, Webhooks),
@@ -314,7 +313,6 @@ class OmniBridgeProServer:
                 logger.error(f"Error processing stdio line: {e}")
 
 def main():
-    print_upgrade_notice()
     server = OmniBridgeProServer()
     server.run_stdio()
 

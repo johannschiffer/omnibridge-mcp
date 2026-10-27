@@ -51,12 +51,14 @@ Claude Desktop / Cursor config entry:
 
 ## ⚡ Key Features (Open Source v2.0)
 
-- 🚀 **Zero Heavy Dependencies**: Pure Python implementation with minimal footprint (`httpx`).
-- 💬 **Telegram Bot API**: Send markdown-formatted alerts, silent notifications, and direct messages.
-- 🎮 **Discord Webhooks**: Send rich embed cards with custom colors, titles, and timestamps.
-- 🔌 **Universal Compatibility**: Works out of the box with any MCP-compliant client via standard IO (`stdio`).
-- 🧪 **Built-in CLI**: Interactive test tool to verify credentials and channel delivery in seconds.
-
+- 📱 **Telegram Bot API**: Direct message and alert delivery.
+- 💬 **Discord Webhooks**: Embedded message alerts with custom colors and titles.
+- 💬 **WhatsApp Cloud API & Slack Block Kit**: Multi-channel business messaging support.
+- 🌐 **Matrix Protocol Rooms**: Decentralized notification dispatching.
+- 🔐 **Custom Webhooks with HMAC**: Cryptographic signature validation for webhook buses.
+- 💾 **Offline WAL Resilient Queue**: SQLite WAL persistent queue with zero message loss.
+- ⚡ **Adaptive Rate Limiting**: Anti-ban protection and exponential backoff.
+- 🐳 **Production Docker & Compose**: Containerized multi-channel gateway.
 ---
 
 ## 🚀 Quick Setup in 2 Minutes
@@ -145,25 +147,6 @@ On Linux: `~/.config/Claude/claude_desktop_config.json`
 
 ---
 
-## 💎 Need Enterprise Features? Upgrade to OmniBridge Pro
-
-Looking for production-grade reliability, business messaging, and fault tolerance?
-
-| Feature | v1.0 (Legacy) | v2.0 (Open Source) |
-|---|:---:|:---:|
-| **Telegram Bot API** | ✅ | ✅ |
-| **Discord Webhooks** | ✅ | ✅ |
-| **WhatsApp Cloud API** | ❌ | ✅ |
-| **Slack Block Kit & Webhooks** | ❌ | ✅ |
-| **Matrix Protocol Rooms** | ❌ | ✅ |
-| **Custom Webhooks with HMAC** | ❌ | ✅ |
-| **Offline WAL Resilient Queue** *(Zero Message Loss)* | ❌ | ✅ |
-| **Adaptive Rate Limiting** *(Anti-ban protection)* | ❌ | ✅ |
-| **Production Docker & Compose** | ❌ | ✅ |
-| **Full Pytest Suite & Architecture PDF** | ❌ | ✅ |
-
----
-
 ## 📄 License
 
 MIT License. See [LICENSE](LICENSE) for details.
@@ -188,3 +171,11 @@ MIT License. See [LICENSE](LICENSE) for details.
   - **High-Performance VPS & Nodes**: [Hetzner Cloud](https://www.hetzner.com/cloud) & [DigitalOcean](https://m.do.co/c/johannschiffer)
   - **Reliable Proxy Pool & IP Rotation**: [Webshare](https://www.webshare.io/) & [Bright Data](https://brightdata.com/)
   - **Documentation & Setup Guides**: [johannschiffer.github.io](https://johannschiffer.github.io/)
+
+---
+
+## Support
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/johannschiffer)
+
+If you find this tool helpful, you can support its maintenance via Ko-fi.
