@@ -1,5 +1,5 @@
 """
-WhatsApp Cloud API channel provider (Pro Feature).
+WhatsApp Cloud API channel provider.
 Supports direct messaging to phone numbers via Meta Graph API.
 """
 import os

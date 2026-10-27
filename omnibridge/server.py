@@ -1,5 +1,5 @@
 """
-OmniBridge MCP: Model Context Protocol Server (Enterprise Pro Edition)
+OmniBridge MCP: Model Context Protocol Server
 Includes multi-channel dispatch (Telegram, Discord, WhatsApp, Slack, Matrix, Webhooks),
 persistent WAL offline queue, and adaptive token bucket rate-limiting.
 """
@@ -17,12 +17,12 @@ from .core.rate_limiter import RateLimiter
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] [OmniBridge-Pro] %(message)s",
+    format="%(asctime)s [%(levelname)s] [OmniBridge] %(message)s",
     stream=sys.stderr
 )
-logger = logging.getLogger("OmniBridgeProServer")
+logger = logging.getLogger("OmniBridgeServer")
 
-class OmniBridgeProServer:
+class OmniBridgeServer:
     def __init__(self, queue_db_path: Optional[str] = None):
         self.telegram = TelegramChannel()
         self.discord = DiscordChannel()
@@ -32,7 +32,7 @@ class OmniBridgeProServer:
         self.webhook = CustomWebhookChannel()
         self.queue = ResilientQueue(queue_db_path)
         self.limiter = RateLimiter(default_rate=5.0, default_burst=10)
-        self.server_name = "omnibridge-mcp-pro"
+        self.server_name = "omnibridge-mcp"
         self.server_version = "1.0.0"
 
     def get_tools_definition(self) -> List[Dict[str, Any]]:
@@ -210,14 +210,14 @@ class OmniBridgeProServer:
 
         elif name == "get_queue_stats":
             return {
-                "edition": "Enterprise Pro",
+                
                 "queue_db": str(self.queue.db_path),
                 "stats": self.queue.get_stats()
             }
 
         elif name == "get_channel_status":
             return {
-                "edition": "Enterprise Pro (All Channels Active)",
+                "version": "1.0.0",
                 "channels": {
                     "telegram": {"configured": self.telegram.is_configured()},
                     "discord": {"configured": self.discord.is_configured()},
@@ -238,7 +238,7 @@ class OmniBridgeProServer:
 
         if req_id is None:
             if method == "notifications/initialized":
-                logger.info("Pro client completed initialization handshake.")
+                logger.info("Client completed initialization handshake.")
             return None
 
         if method == "initialize":
@@ -313,7 +313,7 @@ class OmniBridgeProServer:
                 logger.error(f"Error processing stdio line: {e}")
 
 def main():
-    server = OmniBridgeProServer()
+    server = OmniBridgeServer()
     server.run_stdio()
 
 if __name__ == "__main__":

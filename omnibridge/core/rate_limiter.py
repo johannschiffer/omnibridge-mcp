@@ -1,5 +1,5 @@
 """
-Adaptive Token Bucket Rate Limiter (OmniBridge Pro Core).
+Adaptive Token Bucket Rate Limiter.
 Prevents account bans and provider rate limiting from autonomous agent loops.
 """
 import time

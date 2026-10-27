@@ -1,5 +1,5 @@
 """
-Resilient WAL-backed Queue Engine (OmniBridge Pro Core).
+Resilient WAL-backed Queue Engine.
 Ensures zero message loss during transient network partitions, API outages, or rate-limiting.
 """
 import os

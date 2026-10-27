@@ -1,5 +1,5 @@
 """
-Slack Webhook and Block Kit channel provider (Pro Feature).
+Slack Webhook and Block Kit channel provider.
 """
 import os
 from typing import Dict, Any, Optional, List

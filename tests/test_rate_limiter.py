@@ -1,5 +1,5 @@
 """
-Unit tests for OmniBridge Pro rate limiter.
+Unit tests for OmniBridge rate limiter.
 """
 from omnibridge.core.rate_limiter import RateLimiter
 

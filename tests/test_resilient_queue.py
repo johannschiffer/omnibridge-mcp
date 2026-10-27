@@ -1,5 +1,5 @@
 """
-Unit tests for OmniBridge Pro resilient WAL queue.
+Unit tests for OmniBridge resilient WAL queue.
 """
 import pytest
 import time

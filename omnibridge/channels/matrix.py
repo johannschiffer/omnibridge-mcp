@@ -1,5 +1,5 @@
 """
-Matrix Protocol room message provider (Pro Feature).
+Matrix Protocol room message provider.
 """
 import os
 import time

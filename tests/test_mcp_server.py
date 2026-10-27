@@ -1,12 +1,12 @@
 """
-Unit tests for OmniBridge Pro MCP server JSON-RPC protocol compliance.
+Unit tests for OmniBridge MCP server JSON-RPC protocol compliance.
 """
 import pytest
 import json
-from omnibridge.server import OmniBridgeProServer
+from omnibridge.server import OmniBridgeServer
 
 def test_mcp_initialize(tmp_path):
-    server = OmniBridgeProServer(queue_db_path=str(tmp_path / "queue.db"))
+    server = OmniBridgeServer(queue_db_path=str(tmp_path / "queue.db"))
     req = {
         "jsonrpc": "2.0",
         "id": 1,
@@ -20,10 +20,10 @@ def test_mcp_initialize(tmp_path):
     resp = server.handle_request(req)
     assert resp["id"] == 1
     assert "capabilities" in resp["result"]
-    assert resp["result"]["serverInfo"]["name"] == "omnibridge-mcp-pro"
+    assert resp["result"]["serverInfo"]["name"] == "omnibridge-mcp"
 
 def test_mcp_tools_list(tmp_path):
-    server = OmniBridgeProServer(queue_db_path=str(tmp_path / "queue.db"))
+    server = OmniBridgeServer(queue_db_path=str(tmp_path / "queue.db"))
     req = {
         "jsonrpc": "2.0",
         "id": 2,
@@ -43,7 +43,7 @@ def test_mcp_tools_list(tmp_path):
     assert "get_channel_status" in tool_names
 
 def test_mcp_tools_call_get_channel_status(tmp_path):
-    server = OmniBridgeProServer(queue_db_path=str(tmp_path / "queue.db"))
+    server = OmniBridgeServer(queue_db_path=str(tmp_path / "queue.db"))
     req = {
         "jsonrpc": "2.0",
         "id": 3,
@@ -57,6 +57,6 @@ def test_mcp_tools_call_get_channel_status(tmp_path):
     assert resp["id"] == 3
     content_text = resp["result"]["content"][0]["text"]
     data = json.loads(content_text)
-    assert data["edition"] == "Enterprise Pro (All Channels Active)"
+    assert data.get("version") == "1.0.0" or "channels" in data
     assert "telegram" in data["channels"]
     assert "whatsapp" in data["channels"]

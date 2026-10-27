@@ -1,5 +1,5 @@
 """
-Custom enterprise webhook provider with HMAC-SHA256 signature support (Pro Feature).
+Custom webhook provider with HMAC-SHA256 signature support.
 """
 import os
 import time
