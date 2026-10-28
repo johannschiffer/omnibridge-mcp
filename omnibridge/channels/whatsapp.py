@@ -3,9 +3,12 @@ WhatsApp Cloud API channel provider.
 Supports direct messaging to phone numbers via Meta Graph API.
 """
 import os
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 import httpx
+
 from .base import BaseChannel
+
 
 class WhatsAppChannel(BaseChannel):
     channel_name = "whatsapp"
@@ -22,14 +25,22 @@ class WhatsAppChannel(BaseChannel):
         if not self.is_configured():
             return {
                 "success": False,
-                "error": "WHATSAPP_PHONE_NUMBER_ID or WHATSAPP_ACCESS_TOKEN is not configured."
+                "retryable": False,
+                "error": "WHATSAPP_PHONE_NUMBER_ID or WHATSAPP_ACCESS_TOKEN is not configured.",
             }
 
-        clean_phone = "".join(filter(str.isdigit, to_phone))
+        clean_phone = "".join(filter(str.isdigit, to_phone or ""))
+        if len(clean_phone) < 7:
+            return {
+                "success": False,
+                "retryable": False,
+                "error": "Invalid recipient phone number.",
+            }
+
         url = f"https://graph.facebook.com/{self.api_version}/{self.phone_number_id}/messages"
         headers = {
             "Authorization": f"Bearer {self.access_token}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
         payload = {
             "messaging_product": "whatsapp",
@@ -38,8 +49,8 @@ class WhatsAppChannel(BaseChannel):
             "type": "text",
             "text": {
                 "preview_url": preview_url,
-                "body": text
-            }
+                "body": text,
+            },
         }
 
         try:
@@ -52,18 +63,19 @@ class WhatsAppChannel(BaseChannel):
                         "success": True,
                         "channel": "whatsapp",
                         "message_id": msg_id,
-                        "recipient": clean_phone
+                        "recipient": clean_phone,
                     }
-                else:
-                    return {
-                        "success": False,
-                        "channel": "whatsapp",
-                        "status_code": resp.status_code,
-                        "error": data.get("error", {}).get("message", resp.text)
-                    }
+                return {
+                    "success": False,
+                    "retryable": resp.status_code in (408, 429, 500, 502, 503, 504),
+                    "channel": "whatsapp",
+                    "status_code": resp.status_code,
+                    "error": data.get("error", {}).get("message", resp.text[:500]),
+                }
         except Exception as e:
             return {
                 "success": False,
+                "retryable": True,
                 "channel": "whatsapp",
-                "error": f"WhatsApp API connection error: {str(e)}"
+                "error": f"WhatsApp API connection error: {str(e)}",
             }

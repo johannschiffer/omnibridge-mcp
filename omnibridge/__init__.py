@@ -1,9 +1,8 @@
 """
-omnibridge-mcp (v1.0.0)
-Lightweight, resilient multi-channel notification and webhook MCP server with WAL queue for AI agents
-
+omnibridge-mcp (v2.0.1)
+Multi-channel notification and signed webhook MCP server with SQLite WAL retry queue for AI agents.
 """
 
-__version__ = "1.0.0"
+__version__ = "2.0.1"
 __author__ = "Johann Schiffer"
 __license__ = "MIT"

@@ -2,24 +2,39 @@
 Telegram Bot notification channel provider.
 """
 import os
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 import httpx
+
 from .base import BaseChannel
+
 
 class TelegramChannel(BaseChannel):
     channel_name = "telegram"
 
     def __init__(self, bot_token: Optional[str] = None):
-        self.bot_token = bot_token or os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
+        self.bot_token = bot_token if bot_token is not None else os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
 
     def is_configured(self) -> bool:
         return bool(self.bot_token)
 
-    def send(self, chat_id: str, text: str, parse_mode: str = "Markdown", disable_notification: bool = False) -> Dict[str, Any]:
+    def _scrub(self, text: str) -> str:
+        if self.bot_token and self.bot_token in text:
+            return text.replace(self.bot_token, "[REDACTED]")
+        return text
+
+    def send(
+        self,
+        chat_id: str,
+        text: str,
+        parse_mode: str = "Markdown",
+        disable_notification: bool = False,
+    ) -> Dict[str, Any]:
         if not self.is_configured():
             return {
                 "success": False,
-                "error": "TELEGRAM_BOT_TOKEN is not configured. Set environment variable or pass token."
+                "retryable": False,
+                "error": "TELEGRAM_BOT_TOKEN is not configured. Set environment variable or pass token.",
             }
 
         url = f"https://api.telegram.org/bot{self.bot_token}/sendMessage"
@@ -27,7 +42,7 @@ class TelegramChannel(BaseChannel):
             "chat_id": chat_id,
             "text": text,
             "parse_mode": parse_mode,
-            "disable_notification": disable_notification
+            "disable_notification": disable_notification,
         }
 
         try:
@@ -39,18 +54,19 @@ class TelegramChannel(BaseChannel):
                         "success": True,
                         "channel": "telegram",
                         "message_id": data.get("result", {}).get("message_id"),
-                        "chat_id": chat_id
+                        "chat_id": chat_id,
                     }
-                else:
-                    return {
-                        "success": False,
-                        "channel": "telegram",
-                        "error": data.get("description", resp.text),
-                        "status_code": resp.status_code
-                    }
+                return {
+                    "success": False,
+                    "retryable": resp.status_code in (408, 429, 500, 502, 503, 504),
+                    "channel": "telegram",
+                    "error": self._scrub(str(data.get("description", resp.text[:500]))),
+                    "status_code": resp.status_code,
+                }
         except Exception as e:
             return {
                 "success": False,
+                "retryable": True,
                 "channel": "telegram",
-                "error": f"Connection error: {str(e)}"
+                "error": f"Connection error: {self._scrub(str(e))}",
             }

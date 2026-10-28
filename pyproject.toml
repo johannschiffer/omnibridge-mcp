@@ -1,14 +1,14 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "omnibridge-mcp"
-version = "1.0.0"
-description = "Lightweight, resilient multi-channel notification and webhook MCP server with WAL queue for AI agents"
+version = "2.0.1"
+description = "Multi-channel notification and signed webhook MCP server with SQLite WAL retry queue for AI agents"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Johann Schiffer"}
 ]
@@ -26,6 +26,9 @@ omnibridge-cli = "omnibridge.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["omnibridge*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
 
 [project.urls]
 Homepage = "https://github.com/johannschiffer/omnibridge-mcp"

@@ -1,158 +1,85 @@
-# omnibridge-mcp (v1.0.0)
+# omnibridge-mcp
 
-[![PyPI version](https://img.shields.io/badge/PyPI-v1.0.0-blue.svg)](https://pypi.org/project/omnibridge-mcp/)
+[![PyPI version](https://img.shields.io/pypi/v/omnibridge-mcp.svg)](https://pypi.org/project/omnibridge-mcp/)
+[![CI](https://github.com/johannschiffer/omnibridge-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/johannschiffer/omnibridge-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Support on Ko-fi](https://img.shields.io/badge/Support%20on-Ko--fi-ff5e5b.svg)](https://ko-fi.com/johannschiffer)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-brightgreen.svg)](https://python.org)
+[![MCP Compliant](https://img.shields.io/badge/MCP-2024--11--05-purple.svg)](https://modelcontextprotocol.io)
 
 <a href="https://glama.ai/mcp/servers/@johannschiffer/omnibridge-mcp">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/@johannschiffer/omnibridge-mcp/badge" alt="omnibridge-mcp MCP server" />
 </a>
 
-[![PyPI](https://img.shields.io/pypi/v/omnibridge-mcp.svg)](https://pypi.org/project/omnibridge-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-brightgreen.svg)](https://python.org)
-[![MCP Compliant](https://img.shields.io/badge/MCP-2024--11--05-purple.svg)](https://modelcontextprotocol.io)
+**OmniBridge MCP** is a Model Context Protocol (2024-11-05) notification and webhook gateway that lets AI agents send alerts across Telegram, Discord, Slack, WhatsApp Cloud API, Matrix, and HMAC-signed webhooks with per-channel rate limiting and a persistent SQLite WAL retry queue.
 
-**OmniBridge MCP** is a lightweight, zero-latency Model Context Protocol server that gives AI agents (in **Claude Desktop**, **Cursor**, **Windsurf**, and **Antigravity**) direct, controlled access to send real-time alerts, operational notifications, and webhooks without exposing your primary API keys or relying on bloated middleware.
+## Features
 
----
+- **6 Outbound Channels**: Telegram Bot API, Discord Webhooks, Slack Block Kit Webhooks, WhatsApp Cloud API, Matrix rooms, and HMAC-SHA256 custom webhooks.
+- **Outbound SSRF & Prefix Guards**: Enforces official `https://discord.com/api/webhooks/` and `https://hooks.slack.com/` prefixes even on per-call overrides, blocks loopback/RFC1918/link-local (`169.254.169.254`) webhook targets, URL-encodes Matrix room IDs, and redacts bot tokens from transport errors.
+- **Persistent SQLite WAL Queue & Flush Worker**: Rate-limited and transient 5xx/network failures are stored in `~/.omnibridge/queue.db` (`0600` permissions) and retried with exponential backoff via `flush_queue` or `omnibridge-cli flush`.
 
-## Run without cloning
+## Quickstart
+
+### Run with `uvx`
 
 ```bash
 uvx omnibridge-mcp
 ```
 
-Claude Desktop / Cursor config entry:
+### Claude Desktop / Cursor Configuration
 
 ```json
 {
   "mcpServers": {
     "omnibridge-mcp": {
       "command": "uvx",
-      "args": [
-        "omnibridge-mcp"
-      ]
-    }
-  }
-}
-```
-
-[![CI](https://github.com/johannschiffer/omnibridge-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/johannschiffer/omnibridge-mcp/actions/workflows/ci.yml)
-
-## Features
-
-- 📱 **Telegram Bot API**: Direct message and alert delivery.
-- 💬 **Discord Webhooks**: Embedded message alerts with custom colors and titles.
-- 💬 **WhatsApp Cloud API & Slack Block Kit**: Multi-channel business messaging support.
-- 🌐 **Matrix Protocol Rooms**: Decentralized notification dispatching.
-- 🔐 **Custom Webhooks with HMAC**: Cryptographic signature validation for webhook buses.
-- 💾 **Offline WAL Resilient Queue**: SQLite WAL persistent queue with zero message loss.
-- ⚡ **Adaptive Rate Limiting**: Anti-ban protection and exponential backoff.
-- 🐳 **Production Docker & Compose**: Containerized multi-channel gateway.
----
-
-## 🚀 Quick Setup in 2 Minutes
-
-### 1. Installation
-
-```bash
-git clone https://github.com/johannschiffer/omnibridge-mcp.git
-cd omnibridge-mcp
-pip install -r requirements.txt
-```
-
-### 2. Environment Variables
-
-Create a `.env` file or export variables in your shell:
-
-```bash
-# Telegram Bot Token (from @BotFather)
-export TELEGRAM_BOT_TOKEN="123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ"
-
-# Discord Webhook URL (from Channel Settings -> Integrations -> Webhooks)
-export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/..."
-```
-
-### 3. Verify with CLI
-
-```bash
-# Check channels configuration
-python -m omnibridge.cli status
-
-# Send a test alert to Discord
-python -m omnibridge.cli test --channel discord --message "OmniBridge is live!"
-```
-
----
-
-## 🖥️ Client Configuration
-
-### Claude Desktop (`claude_desktop_config.json`)
-
-On macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`  
-On Windows: `%APPDATA%\Claude\claude_desktop_config.json`  
-On Linux: `~/.config/Claude/claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "omnibridge": {
-      "command": "python",
-      "args": ["-m", "omnibridge.server"],
-      "cwd": "/path/to/omnibridge-mcp",
+      "args": ["omnibridge-mcp"],
       "env": {
         "TELEGRAM_BOT_TOKEN": "your_bot_token_here",
-        "DISCORD_WEBHOOK_URL": "your_discord_webhook_url_here"
+        "DISCORD_WEBHOOK_URL": "https://discord.com/api/webhooks/..."
       }
     }
   }
 }
 ```
 
-### Cursor (`.cursor/mcp.json`)
+### CLI Diagnostics
 
-```json
-{
-  "mcpServers": {
-    "omnibridge": {
-      "command": "python -m omnibridge.server",
-      "env": {
-        "TELEGRAM_BOT_TOKEN": "your_bot_token_here",
-        "DISCORD_WEBHOOK_URL": "your_discord_webhook_url_here"
-      }
-    }
-  }
-}
+```bash
+omnibridge-cli status
+omnibridge-cli flush
+omnibridge-cli test --channel discord --message "OmniBridge test alert"
 ```
 
----
-
-## 🛠️ MCP Tools Available
+## MCP Tools Available
 
 | Tool | Parameters | Description |
 |---|---|---|
-| `send_telegram_message` | `chat_id`, `text`, `disable_notification` | Sends Telegram notification with Markdown support |
-| `send_discord_alert` | `content`, `title`, `description`, `color`, `webhook_url` | Sends Discord rich embed card |
-| `get_channel_status` | *(none)* | Returns connectivity and health of all channels |
-
----
+| `send_telegram_message` | `chat_id`, `text`, `disable_notification` | Send a Telegram notification with Markdown formatting |
+| `send_discord_alert` | `content`, `title`, `description`, `color`, `webhook_url` | Send a Discord webhook message or rich embed |
+| `send_whatsapp_message` | `to_phone`, `text`, `preview_url` | Send a WhatsApp Cloud API text message |
+| `send_slack_notification` | `text`, `header`, `webhook_url` | Send a Slack Block Kit webhook notification |
+| `send_matrix_message` | `body`, `room_id` | Send a Matrix room event (`m.room.message`) |
+| `send_custom_webhook` | `url`, `payload`, `secret` | Deliver a JSON webhook signed with `X-OmniBridge-Signature` (`sha256=...`) |
+| `get_queue_stats` | *(none)* | Return pending, retrying, delivered, and failed counts in the SQLite WAL queue |
+| `flush_queue` | `max_items` | Process due messages in the SQLite WAL retry queue |
+| `get_channel_status` | *(none)* | Return configuration status for all 6 channels and current queue counts |
 
 ## Genesis MCP Ecosystem
 
 | Module | Description | Repository |
 |---|---|---|
-| **CrawlEngine MCP** | Anti-bot web scraping, clean Markdown, proxy rotation, and TLS evasion | [GitHub](https://github.com/johannschiffer/crawlengine-mcp) |
-| **BrowserBridge MCP** | Deterministic headless browser automation with cryptographic action receipts | [GitHub](https://github.com/johannschiffer/browserbridge-mcp) |
-| **PgSafe MCP** | Zero-trust PostgreSQL/SQLite guard, live PII masking, and schema inspection | [GitHub](https://github.com/johannschiffer/pgsafe-mcp) |
-| **OmniBridge MCP** | Multi-channel notification bus with persistent SQLite queue | [GitHub](https://github.com/johannschiffer/omnibridge-mcp) |
-| **SysFlow MCP** | Safe Linux administration, systemd automation, and port auditing | [GitHub](https://github.com/johannschiffer/sysflow-mcp) |
-| **FastMCP Forge** | Production FastMCP server scaffolder with stdio and SSE middleware | [GitHub](https://github.com/johannschiffer/fastmcp-forge) |
+| **CrawlEngine MCP** | HTTP web extraction to clean Markdown, JSON-LD parsing, and proxy rotation | [GitHub](https://github.com/johannschiffer/crawlengine-mcp) |
+| **BrowserBridge MCP** | Lightweight HTTP/DOM session automation with SHA-256 action receipts | [GitHub](https://github.com/johannschiffer/browserbridge-mcp) |
+| **PgSafe MCP** | Read-only PostgreSQL/SQLite query guard, PII masking, and dry-run mutations | [GitHub](https://github.com/johannschiffer/pgsafe-mcp) |
+| **OmniBridge MCP** | Multi-channel notification bus with SQLite retry queue | [GitHub](https://github.com/johannschiffer/omnibridge-mcp) |
+| **SysFlow MCP** | Linux systemd inspection, confined log tailing, and port auditing | [GitHub](https://github.com/johannschiffer/sysflow-mcp) |
+| **FastMCP Forge** | Zero-dependency FastMCP framework, CLI scaffolder, and SSE middleware | [GitHub](https://github.com/johannschiffer/fastmcp-forge) |
 
 ## Support
 
-If you find this project helpful, you can support its ongoing maintenance on [Ko-fi](https://ko-fi.com/johannschiffer).
+If you find this project useful, you can support maintenance on [Ko-fi](https://ko-fi.com/johannschiffer).
 
 ## License
 
-MIT © 2026 [Johann Schiffer](https://github.com/johannschiffer)
+MIT (c) 2026 [Johann Schiffer](https://github.com/johannschiffer)
