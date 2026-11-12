@@ -11,6 +11,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from .. import __version__
+from ..core.safe_transport import guarded_transport
 from ..core.url_guard import validate_outbound_url
 from .base import BaseChannel
 
@@ -68,7 +69,7 @@ class CustomWebhookChannel(BaseChannel):
             headers["X-OmniBridge-Signature"] = f"sha256={digest}"
 
         try:
-            with httpx.Client(timeout=10.0) as client:
+            with httpx.Client(timeout=10.0, transport=guarded_transport()) as client:
                 resp = client.post(target_url, content=raw_body, headers=headers)
                 succeeded = resp.status_code in (200, 201, 202, 204)
                 return {

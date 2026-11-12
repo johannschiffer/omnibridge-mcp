@@ -8,6 +8,7 @@ from typing import Any, Dict, Optional
 
 import httpx
 
+from ..core.safe_transport import guarded_transport
 from ..core.url_guard import validate_outbound_url
 from .base import BaseChannel
 
@@ -58,7 +59,7 @@ class MatrixChannel(BaseChannel):
         payload = {"msgtype": msgtype, "body": body}
 
         try:
-            with httpx.Client(timeout=10.0) as client:
+            with httpx.Client(timeout=10.0, transport=guarded_transport()) as client:
                 resp = client.put(url, json=payload, headers=headers)
                 data = resp.json()
                 if resp.status_code in (200, 201) and "event_id" in data:

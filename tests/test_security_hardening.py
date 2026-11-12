@@ -124,3 +124,4 @@ def test_cli_version_and_parse_error(tmp_path):
     assert proc.returncode == 0
     err = json.loads(proc.stdout.strip())
     assert err["error"]["code"] == -32700
+
