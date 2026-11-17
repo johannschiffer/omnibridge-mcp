@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omnibridge-mcp"
-version = "2.0.1"
+version = "2.1.0"
 description = "Multi-channel notification and signed webhook MCP server with SQLite WAL retry queue for AI agents"
 readme = "README.md"
 requires-python = ">=3.10"

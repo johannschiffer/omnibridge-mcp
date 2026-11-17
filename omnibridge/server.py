@@ -8,9 +8,11 @@ import argparse
 import json
 import logging
 import sys
+import time
 from typing import Any, Dict, List, Optional
 
 from . import __version__
+from ._genesis import record_blackbox_event
 from .channels import (
     CustomWebhookChannel,
     DiscordChannel,
@@ -225,7 +227,38 @@ class OmniBridgeServer:
             "send_matrix_message": "matrix",
             "send_custom_webhook": "webhook",
         }
+        start_t = time.perf_counter()
+        res = self._execute_tool_call(name, arguments, channel_map)
+        duration_ms = round((time.perf_counter() - start_t) * 1000.0, 3)
+        if name in channel_map:
+            record_blackbox_event(
+                "HTTP_CLIENT",
+                {
+                    "tool": name,
+                    "channel": channel_map[name],
+                    "queued": bool(res.get("queued", False)),
+                    "error": res.get("error"),
+                },
+                source=self.server_name,
+                duration_ms=duration_ms,
+                status="ok" if res.get("success", False) else "error",
+            )
+        elif name in ("get_queue_stats", "flush_queue", "get_channel_status"):
+            record_blackbox_event(
+                "MCP_TOOL",
+                {"tool": name},
+                source=self.server_name,
+                duration_ms=duration_ms,
+                status="ok",
+            )
+        return res
 
+    def _execute_tool_call(
+        self,
+        name: str,
+        arguments: Dict[str, Any],
+        channel_map: Dict[str, str],
+    ) -> Dict[str, Any]:
         if name in channel_map:
             channel = channel_map[name]
             if not self.limiter.acquire(channel):
